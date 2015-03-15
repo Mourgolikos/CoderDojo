@@ -1,0 +1,1 @@
+Using the input of a photoresistor sensor to trigger an LED.
