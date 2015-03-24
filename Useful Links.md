@@ -1,7 +1,7 @@
 # Ενδιαφέροντα, χρήσιμα και σημαντικά links
 
 <br><br><br>
-#### Εικονοφαγημένος Οδηγός στα Ελληνικά για το Scratch 2.0 από την κ. Μαρία Σκιαδέλλη
+#### Εικονογραφημένος Οδηγός στα Ελληνικά για το Scratch 2.0 από την κ. Μαρία Σκιαδέλλη
 [> gdrive link](https://drive.google.com/folderview?id=0B9FdWe5F-kMnWWR5RmhPRF9zbnM&usp=sharing)
 <br><br><br>
 #### Scratch - Φιλικό Προγραμματιστικό Περιβάλλον με drag 'n' drop
