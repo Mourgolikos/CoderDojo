@@ -47,7 +47,7 @@ uint8_t payload[PAYLOAD_SIZE] = {};
 #define CUBESDATATEXT_SIZE 5
 // text to write in String Array //size:5
 int cubesDataText_index = 0;
-String cubesDataText[CUBESDATATEXT_SIZE] = { "number_1", "number_3", "number_4", "number_5", "addition" };
+String cubesDataText[CUBESDATATEXT_SIZE] = { "1", "3", "4", "5", "addition" }; // "addition".toInt() will parse as zero
 
 
 
@@ -157,86 +157,96 @@ int addition(int number, boolean nextNumber){
      Serial.print("SecondNumber: ");
      Serial.println(secondNumber);
      
+     Serial.print("Inside addition with passing numberToLightUP(firstNumber + secondNumber): ");//for debugging
+     Serial.println(firstNumber + secondNumber);//for debugging
+     
+     numberToLightUP(firstNumber + secondNumber); // Lighting up the sum of the numbers!
      return (firstNumber + secondNumber);
-}
-void storeNumber(int number){
-
 }
 /////////////////////// END of Functions about the Addition of the Numbers
 ///////////////////////////////////////////////////////////////
 //// Functions about decoding NFC message to Segment Display Numbers
 /////////////
 boolean messageSegment(char* message){
-      for (int i=0; i < CUBESDATATEXT_SIZE; i++){
-            if ( message == (char*)cubesDataText[i].c_str() ){ //C++ "String"... yay...
-                  return numberSegment( cubesDataText[i].toInt() ); //instead of using (correctly) the variable message, i use the equal char-ready cubesDataText[i], to avoid conversions...
-            }
-      }
-      return false;
+                  Serial.print("in messageSegment: ");//for debugging
+                  Serial.print("  ");//for debugging
+                  Serial.println(message);//for debugging
+                  return numberSegment( ((String)message).toInt() ); //Converting char* message to String, in order to parse the Int number from the NFC reading... //I HATE C++ with all these char and String *love*!
 }
 /////////////////////// END of Functions about decoding NFC message to Segment Display Numbers
 ///////////////////////////////////////////////////////////////
 //// Functions about lighting up Segment Display Numbers
 /////////////
 boolean numberSegment(int number){
+        for ( int i=1;i<10;i++ ){ // check if the number is indeed an int number from 1 to 10
+              if ( number == i ){
+                    addition(number,false);
+                    Serial.print("Inside numberSegment for-loop with passing i: ");//for debugging
+                    Serial.println(i);//for debugging
+                    return true;
+              }
+        }
+        if (number==0){ // check if we are getting the addition mark (formed as zero)
+              addition(number,true);
+              return true;
+        } else {
+              return false;
+        }
+}
+
+void numberToLightUP(int number){
         switch (number){
               case 0:
-                    //Zero-Ten
+                    //Zero=Ten
                     writeZero();
-                    addition(number,true);
-                    return true;
+                    break;
               case 1:
                     //One
                     writeOne();
-                    addition(number,false);
-                    return true;
+                    break;
               case 2:
                     //Two
                     writeTwo();
-                    addition(number,false);
-                    return true;
+                    break;
               case 3:
                     //Three
                     writeThree();
-                    addition(number,false);
-                    return true;
+                    break;
               case 4:
                     //Four
                     writeFour();
-                    addition(number,false);
-                    return true;
+                    break;
               case 5:
                     //Five
                     writeFive();
-                    addition(number,false);
-                    return true;
+                    break;
               case 6:
                     //Six
                     writeSix();
-                    addition(number,false);
-                    return true;
+                    break;
               case 7:
                     //Seven
                     writeSeven();
-                    addition(number,false);
-                    return true;
+                    break;
               case 8:
                     //Eight
                     writeEight();
-                    addition(number,false);
-                    return true;
+                    break;
               case 9:
                     //Nine
                     writeNine();
-                    addition(number,false);
-                    return true;
+                    break;
+              case 10:
+                    //Ten=Zero
+                    writeZero();
+                    break;
               default:
                     //Not Found, Return false
-                    return false;
+                    allOff();
+                    Serial.println("Inside numberToLightUP: couldn't match number");//for debugging
+                    break;
         }        
-        return false;
 }
-
 void allOff(){
         digitalWrite(2, 0);
 	digitalWrite(3, 0);
@@ -259,11 +269,13 @@ void writeZero(){
 	digitalWrite(6, 1);
 	digitalWrite(7, 1);
         writeDP(); //i like Zero to be shown with the Dot Point ON  ;)
+        Serial.println("Segment with number 0 and DP turned on!"); // some feedback
 }
 void writeOne(){
         allOff();
 	digitalWrite(3, 1);
 	digitalWrite(4, 1);
+        Serial.println("Segment with number 1 turned on!"); // some feedback
 }
 void writeTwo(){
         allOff();
@@ -272,6 +284,7 @@ void writeTwo(){
 	digitalWrite(5, 1);
 	digitalWrite(6, 1);
 	digitalWrite(8, 1);
+        Serial.println("Segment with number 2 turned on!"); // some feedback
 }
 void writeThree(){
         allOff();
@@ -280,6 +293,7 @@ void writeThree(){
 	digitalWrite(4, 1);
 	digitalWrite(5, 1);
 	digitalWrite(8, 1);
+        Serial.println("Segment with number 3 turned on!"); // some feedback
 }
 void writeFour(){
         allOff();
@@ -287,6 +301,7 @@ void writeFour(){
 	digitalWrite(4, 1);
 	digitalWrite(7, 1);
 	digitalWrite(8, 1);
+        Serial.println("Segment with number 4 turned on!"); // some feedback
 }
 void writeFive(){
         allOff();
@@ -295,6 +310,7 @@ void writeFive(){
 	digitalWrite(5, 1);
 	digitalWrite(7, 1);
 	digitalWrite(8, 1);
+        Serial.println("Segment with number 5 turned on!"); // some feedback
 }
 void writeSix(){
         allOff();
@@ -304,12 +320,14 @@ void writeSix(){
 	digitalWrite(6, 1);
 	digitalWrite(7, 1);
 	digitalWrite(8, 1);
+        Serial.println("Segment with number 6 turned on!"); // some feedback
 }
 void writeSeven(){
         allOff();
         digitalWrite(2, 1);
 	digitalWrite(3, 1);
 	digitalWrite(4, 1);
+        Serial.println("Segment with number 7 turned on!"); // some feedback
 }
 void writeEight(){
         digitalWrite(2, 1);
@@ -319,6 +337,7 @@ void writeEight(){
 	digitalWrite(6, 1);
 	digitalWrite(7, 1);
 	digitalWrite(8, 1);
+        Serial.println("Segment with number 8 turned on!"); // some feedback
 }
 void writeNine(){
         allOff();
@@ -327,5 +346,6 @@ void writeNine(){
 	digitalWrite(4, 1);
 	digitalWrite(7, 1);
 	digitalWrite(8, 1);
+        Serial.println("Segment with number 9 turned on!"); // some feedback
 }
 /////////////////////// END of Functions about lighting up Segment Display Numbers

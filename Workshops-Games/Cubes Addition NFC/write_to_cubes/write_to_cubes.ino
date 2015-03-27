@@ -58,7 +58,7 @@ uint8_t payload[PAYLOAD_SIZE] = {};
 #define CUBESDATATEXT_SIZE 5
 // text to write in String Array //size:5
 int cubesDataText_index = 0;
-String cubesDataText[CUBESDATATEXT_SIZE] = { "number_1", "number_3", "number_4", "number_5", "addition" };
+String cubesDataText[CUBESDATATEXT_SIZE] = { "1", "3", "4", "5", "addition" }; // "addition".toInt() will parse as zero
 
 
 void setup(void) {
