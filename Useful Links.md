@@ -3,6 +3,11 @@
 <br><br><br>
 #### Εικονογραφημένος Οδηγός στα Ελληνικά για το Scratch 2.0 από την κ. Μαρία Σκιαδέλλη
 [> gdrive link](https://drive.google.com/folderview?id=0B9FdWe5F-kMnWWR5RmhPRF9zbnM&usp=sharing)
+
+<br><br><br>
+#### Arduino Extension for *Online* Scratch 2.0
+[> guide's link](http://khanning.github.io/scratch-arduino-extension/)
+
 <br><br><br>
 #### Scratch - Φιλικό Προγραμματιστικό Περιβάλλον με drag 'n' drop
 [> Scratch.mit.edu](https://scratch.mit.edu/)
